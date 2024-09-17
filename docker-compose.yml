@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:15
+    container_name: some_postgres
+    ports:
+      - "${DB_PORT}:5432"  # Map the database port
+    environment:
+      POSTGRES_USER: ${DB_USER}  # Custom username from .env
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Custom password from .env
+      POSTGRES_DB: ${DB_NAME}  # Custom database name from .env
+    volumes:
+      - db_data:/var/lib/postgresql/data  # Persist data on container restart
+    networks:
+      - app_network
+
+volumes:
+  db_data:
+
+networks:
+  app_network:
+    driver: bridge
